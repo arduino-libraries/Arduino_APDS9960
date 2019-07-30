@@ -10,6 +10,13 @@ bool APDS9960::begin() {
     
   // Disable everything
   if (!setENABLE(0x00)) return false;
+  // set ADC integration time to 10 ms
+  if (!setATIME(256 - (10 / 2.78))) return false;
+  // set ADC gain 2x
+  if (!setCONTROL(0x02)) return false;
+  delay(10);
+  // enable power
+  if (!enablePower()) return false;
 
   return true;
 }
@@ -71,6 +78,20 @@ bool APDS9960::disablePower() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
   r &= 0b11111110;
+  return setENABLE(r);
+}
+
+bool APDS9960::enableColor() {
+  uint8_t r;
+  if (!getENABLE(&r)) return false;
+  r |= 0b00000010;
+  return setENABLE(r);
+}
+
+bool APDS9960::disableColor() {
+  uint8_t r;
+  if (!getENABLE(&r)) return false;
+  r &= 0b11111101;
   return setENABLE(r);
 }
 
@@ -238,4 +259,46 @@ int APDS9960::handleGesture() {
       }
     }
   }
+}
+
+int APDS9960::colorAvailable() {
+  uint8_t r;
+
+  enableColor();
+
+  if (!getSTATUS(&r)) {
+    return 0;
+  }
+
+  if (r & 0b00000001) {
+    return 1;
+  }
+
+  return 0;
+}
+
+bool APDS9960::readColor(int& r, int& g, int& b) {
+  int c;
+
+  return readColor(r, g, b, c);
+}
+
+bool APDS9960::readColor(int& r, int& g, int& b, int& c) {
+  uint16_t colors[4];
+
+  if (!readCDATAL((uint8_t *)colors, sizeof(colors))) {
+    r = -1;
+    g = -1;
+    b = -1;
+    c = -1;
+
+    return false;
+  }
+
+  c = colors[0];
+  r = colors[1];
+  g = colors[2];
+  b = colors[3];
+
+  return true;
 }

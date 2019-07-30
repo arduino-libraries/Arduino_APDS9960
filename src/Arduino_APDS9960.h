@@ -18,6 +18,8 @@ public:
 
   bool enablePower();
   bool disablePower();
+  bool enableColor();
+  bool disableColor();
   bool enableProximity();
   bool disableProximity();
   bool enableWait();
@@ -26,6 +28,10 @@ public:
   bool disableGesture();
 
   void dump();
+
+  int colorAvailable();
+  bool readColor(int& r, int& g, int& b);
+  bool readColor(int& r, int& g, int& b, int& c);
 
 private:
   TwoWire &wire;
