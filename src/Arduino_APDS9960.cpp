@@ -300,5 +300,7 @@ bool APDS9960::readColor(int& r, int& g, int& b, int& c) {
   g = colors[2];
   b = colors[3];
 
+  disableColor();
+
   return true;
 }
