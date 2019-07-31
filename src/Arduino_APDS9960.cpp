@@ -12,7 +12,7 @@ bool APDS9960::begin() {
   if (!setENABLE(0x00)) return false;
   // set ADC integration time to 10 ms
   if (!setATIME(256 - (10 / 2.78))) return false;
-  // set ADC gain 2x
+  // set ADC gain 4x (0x00 => 1x, 0x01 => 4x, 0x02 => 16x, 0x03 => 64x)
   if (!setCONTROL(0x02)) return false;
   delay(10);
   // enable power
