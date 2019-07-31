@@ -33,6 +33,9 @@ public:
   bool readColor(int& r, int& g, int& b);
   bool readColor(int& r, int& g, int& b, int& c);
 
+  int proximityAvailable();
+  int readProximity();
+
 private:
   TwoWire &wire;
   bool write(uint8_t val);

@@ -304,3 +304,31 @@ bool APDS9960::readColor(int& r, int& g, int& b, int& c) {
 
   return true;
 }
+
+int APDS9960::proximityAvailable() {
+  uint8_t r;
+
+  enableProximity();
+
+  if (!getSTATUS(&r)) {
+    return 0;
+  }
+
+  if (r & 0b00000010) {
+    return 1;
+  }
+
+  return 0;
+}
+
+int APDS9960::readProximity() {
+  uint8_t r;
+
+  if (!getPDATA(&r)) {
+    return -1;
+  }
+
+  disableProximity();
+
+  return (255 - r);
+}
