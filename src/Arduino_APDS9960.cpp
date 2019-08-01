@@ -180,30 +180,6 @@ int APDS9960::handleGesture() {
           d = fifo_data[i++];
           l = fifo_data[i++];
           r = fifo_data[i++];
-          if (u==0 && d==0 && l==0 && r==0) {
-            out = true;
-            if (direction != 0) {
-              Serial.print(" OUT ");
-              Serial.print(direction);
-              if (dir_in == 1 && direction == 2) {
-                Serial.print(" DOWN!");
-              }
-              if (dir_in == 2 && direction == 1) {
-                Serial.print(" UP!");
-              }
-              if (dir_in == 3 && direction == 4) {
-                Serial.print(" RIGHT!");
-              }
-              if (dir_in == 4 && direction == 3) {
-                Serial.print(" LEFT!");
-              }
-              Serial.println();
-              dir_in = 0;
-              direction = 0;
-            }
-            continue;
-          }
-
           if (u>l && u>r && u>d) {
             direction = 1;
           }
@@ -217,17 +193,29 @@ int APDS9960::handleGesture() {
             direction = 4;
           }
 
-          if (u==255 && d==255 && l==255 && r==255) {
+          if (u==0 && d==0 && l==0 && r==0) {
             in = true;
             if (direction != 0) {
-              Serial.print(" IN ");
+              Serial.print(" OUT ");
               Serial.print(direction);
-              dir_in = direction;
+              if (direction == 1 && dir_in == 2) Serial.print(" DOWN!");
+              if (direction == 2 && dir_in == 1) Serial.print(" UP!");
+              if (direction == 3 && dir_in == 4) Serial.print(" RIGHT!");
+              if (direction == 4 && dir_in == 3) Serial.print(" LEFT!");
+              Serial.println();
               direction = 0;
+              dir_in = 0;
             }
             continue;
           }
 
+          if (in && direction != 0) {
+            in = false;
+            dir_in = direction;
+            Serial.print("IN ");
+            Serial.print(direction);
+            Serial.print(" ");
+          }
           // Serial.print(u);
           // Serial.print(",");
           // Serial.print(d);
