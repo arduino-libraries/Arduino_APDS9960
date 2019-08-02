@@ -4,6 +4,14 @@
 
 #include <Wire.h>
 
+enum {
+  GESTURE_NONE = -1,
+  GESTURE_UP = 0,
+  GESTURE_DOWN = 1,
+  GESTURE_LEFT = 2,
+  GESTURE_RIGHT = 3
+};
+
 class APDS9960 {
 public:
   APDS9960(TwoWire &wire, int irqPin) : wire(wire), irqPin(irqPin) {}
