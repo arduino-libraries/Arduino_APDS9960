@@ -20,6 +20,17 @@ public:
   bool begin();
   void end();
 
+  int gestureAvailable();
+  int readGesture();
+
+  int colorAvailable();
+  bool readColor(int& r, int& g, int& b);
+  bool readColor(int& r, int& g, int& b, int& c);
+
+  int proximityAvailable();
+  int readProximity();
+
+private:
   bool setLEDBoost(uint8_t boost);
   bool setGestureIntEnable(bool en);
   bool setGestureMode(bool en);
@@ -37,18 +48,6 @@ public:
   bool enableGesture();
   bool disableGesture();
 
-  void dump();
-
-  int gestureAvailable();
-  int readGesture();
-
-  int colorAvailable();
-  bool readColor(int& r, int& g, int& b);
-  bool readColor(int& r, int& g, int& b, int& c);
-
-  int proximityAvailable();
-  int readProximity();
-
 private:
   TwoWire &wire;
   int irqPin;
@@ -65,7 +64,7 @@ private:
   bool read(uint8_t reg, uint8_t *val);
   size_t readBlock(uint8_t reg, uint8_t *val, unsigned int len);
 
-public:
+private:
 #define REG(name, addr) \
   bool get##name(uint8_t *val) { return read(addr,  val); } \
   bool set##name(uint8_t val)  { return write(addr, val); } \
