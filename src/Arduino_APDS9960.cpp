@@ -184,6 +184,8 @@ bool in = false;
 bool out = false;
 int direction = 0;
 int dir_in = 0;
+
+uint8_t threshold = 30;
 int APDS9960::handleGesture() {
   while (true) {
     int available = gestureAvailable();
@@ -214,7 +216,7 @@ int APDS9960::handleGesture() {
             direction = 4;
           }
 
-          if (u==0 && d==0 && l==0 && r==0) {
+          if (u<threshold && d<threshold && l<threshold && r<threshold) {
             in = true;
             if (direction != 0) {
               Serial.print(" OUT ");
