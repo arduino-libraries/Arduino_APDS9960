@@ -1,12 +1,10 @@
 #include <Arduino_APDS9960.h>
 
-APDS9960 apds(Wire1);
-
 void setup() {
   Serial.begin(9600);
 
   while (!Serial) {}
-  if (!apds.begin()) {
+  if (!APDS.begin()) {
     Serial.println("Error initializing APDS9960 sensor.");
   } else {
     Serial.println("Initialized OK!");
@@ -15,9 +13,9 @@ void setup() {
 
 void loop() {
   // check if a proximity reading is available
-  if (apds.proximityAvailable()) {
+  if (APDS.proximityAvailable()) {
     // read the proximity
-    int proximity = apds.readProximity(); // 0 => close, 255 => far, -1 => error
+    int proximity = APDS.readProximity(); // 0 => close, 255 => far, -1 => error
 
     Serial.println(proximity);
   }
