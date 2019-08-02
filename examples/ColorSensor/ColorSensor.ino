@@ -1,13 +1,24 @@
+/*
+  APDS9960 - Color Sensor
+
+  This example reads Color data from the on-board APDS9960 sensor of the
+  Nano 33 BLE Sense and prints the color RGB (red, green, blue) values
+  to the Serial Monitor once a second.
+
+  The circuit:
+  - Arduino Nano 33 BLE Sense
+
+  This example code is in the public domain.
+*/
+
 #include <Arduino_APDS9960.h>
 
 void setup() {
   Serial.begin(9600);
+  while (!Serial);
 
-  while (!Serial) {}
   if (!APDS.begin()) {
     Serial.println("Error initializing APDS9960 sensor.");
-  } else {
-    Serial.println("Initialized OK!");
   }
 }
 
