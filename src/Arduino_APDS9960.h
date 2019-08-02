@@ -30,6 +30,8 @@ public:
   int proximityAvailable();
   int readProximity();
 
+  void setGestureThreshold(uint8_t threshold);
+
 private:
   bool setLEDBoost(uint8_t boost);
   bool setGestureIntEnable(bool en);
