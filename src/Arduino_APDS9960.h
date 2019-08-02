@@ -120,4 +120,6 @@ private:
   REG(GFIFO_R,    0xFF)
 };
 
+extern APDS9960 APDS;
+
 #endif // ARDUINO_APDS9960

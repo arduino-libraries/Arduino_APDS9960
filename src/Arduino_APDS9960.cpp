@@ -42,7 +42,9 @@ bool APDS9960::begin() {
   // enable power
   if (!enablePower()) return false;
 
-  pinMode(irqPin, INPUT);
+  if (irqPin > -1) {
+    pinMode(irqPin, INPUT);
+  }
 
   return true;
 }
@@ -251,7 +253,11 @@ int APDS9960::handleGesture() {
 int APDS9960::gestureAvailable() {
   enableGesture();
 
-  if (digitalRead(irqPin) != LOW) {
+  if (irqPin > -1) {
+    if (digitalRead(irqPin) != LOW) {
+      return 0;
+    }
+  } else if (gestureFIFOAvailable() <= 0) {
     return 0;
   }
 
@@ -339,3 +345,9 @@ int APDS9960::readProximity() {
 
   return (255 - r);
 }
+
+#ifdef ARDUINO_ARDUINO_NANO33BLE
+APDS9960 APDS(Wire1, PIN_INT_APDS);
+#else
+APDS9960 APDS(Wire, -1);
+#endif
