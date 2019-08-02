@@ -194,58 +194,57 @@ int APDS9960::handleGesture() {
     uint8_t fifo_data[128];
     uint8_t bytes_read = readGFIFO_U(fifo_data, available * 4);
     if (bytes_read == 0) return 0;
+    if (bytes_read < 4) continue;
 
-    if (bytes_read >= 4) {
-      for (int i = 0; i < bytes_read;) {
-        uint8_t u,d,l,r;
-        u = fifo_data[i++];
-        d = fifo_data[i++];
-        l = fifo_data[i++];
-        r = fifo_data[i++];
-        if (u>l && u>r && u>d) {
-          direction = 1;
-        }
-        if (d>l && d>r && d>u) {
-          direction = 2;
-        }
-        if (l>r && l>u && l>d) {
-          direction = 3;
-        }
-        if (r>l && r>u && r>d) {
-          direction = 4;
-        }
-
-        if (u<threshold && d<threshold && l<threshold && r<threshold) {
-          in = true;
-          if (direction != 0) {
-            Serial.print(" OUT ");
-            Serial.print(direction);
-            if (direction == 1 && dir_in == 2) Serial.print(" DOWN!");
-            if (direction == 2 && dir_in == 1) Serial.print(" UP!");
-            if (direction == 3 && dir_in == 4) Serial.print(" RIGHT!");
-            if (direction == 4 && dir_in == 3) Serial.print(" LEFT!");
-            Serial.println();
-            direction = 0;
-            dir_in = 0;
-          }
-          continue;
-        }
-
-        if (in && direction != 0) {
-          in = false;
-          dir_in = direction;
-          Serial.print("IN ");
-          Serial.print(direction);
-          Serial.print(" ");
-        }
-        // Serial.print(u);
-        // Serial.print(",");
-        // Serial.print(d);
-        // Serial.print(",");
-        // Serial.print(l);
-        // Serial.print(",");
-        // Serial.println(r);
+    for (int i = 0; i < bytes_read;) {
+      uint8_t u,d,l,r;
+      u = fifo_data[i++];
+      d = fifo_data[i++];
+      l = fifo_data[i++];
+      r = fifo_data[i++];
+      if (u>l && u>r && u>d) {
+        direction = 1;
       }
+      if (d>l && d>r && d>u) {
+        direction = 2;
+      }
+      if (l>r && l>u && l>d) {
+        direction = 3;
+      }
+      if (r>l && r>u && r>d) {
+        direction = 4;
+      }
+
+      if (u<threshold && d<threshold && l<threshold && r<threshold) {
+        in = true;
+        if (direction != 0) {
+          Serial.print(" OUT ");
+          Serial.print(direction);
+          if (direction == 1 && dir_in == 2) Serial.print(" DOWN!");
+          if (direction == 2 && dir_in == 1) Serial.print(" UP!");
+          if (direction == 3 && dir_in == 4) Serial.print(" RIGHT!");
+          if (direction == 4 && dir_in == 3) Serial.print(" LEFT!");
+          Serial.println();
+          direction = 0;
+          dir_in = 0;
+        }
+        continue;
+      }
+
+      if (in && direction != 0) {
+        in = false;
+        dir_in = direction;
+        Serial.print("IN ");
+        Serial.print(direction);
+        Serial.print(" ");
+      }
+      // Serial.print(u);
+      // Serial.print(",");
+      // Serial.print(d);
+      // Serial.print(",");
+      // Serial.print(l);
+      // Serial.print(",");
+      // Serial.println(r);
     }
   }
 }
