@@ -52,12 +52,6 @@ void APDS9960::end() {
   setENABLE(0x00);
 }
 
-// bool APDS9960::startGestureSensor() {
-
-//   if (!enableGesture()) return false;
-//   return true;
-// }
-
 // Sets the LED current boost value:
 // 0=100%, 1=150%, 2=200%, 3=300%
 bool APDS9960::setLEDBoost(uint8_t boost) {
@@ -235,13 +229,11 @@ int APDS9960::handleGesture() {
       if (u<threshold && d<threshold && l<threshold && r<threshold) {
         in = true;
         if (direction != 0) {
-          /*Serial.print(" OUT ");
-          Serial.print(direction);*/
-          if (direction == 1 && dir_in == 2) { /*Serial.print(" DOWN!");*/ gesture = GESTURE_DOWN; }
-          if (direction == 2 && dir_in == 1) { /*Serial.print(" UP!");*/ gesture = GESTURE_UP;}
-          if (direction == 3 && dir_in == 4) { /*Serial.print(" RIGHT!");*/ gesture = GESTURE_RIGHT;}
-          if (direction == 4 && dir_in == 3) { /*Serial.print(" LEFT!");*/ gesture = GESTURE_LEFT;}
-          /*Serial.println();*/
+
+          if (direction == 1 && dir_in == 2) { gesture = GESTURE_DOWN; }
+          if (direction == 2 && dir_in == 1) { gesture = GESTURE_UP;}
+          if (direction == 3 && dir_in == 4) { gesture = GESTURE_RIGHT;}
+          if (direction == 4 && dir_in == 3) { gesture = GESTURE_LEFT;}
           direction = 0;
           dir_in = 0;
         }
@@ -251,17 +243,7 @@ int APDS9960::handleGesture() {
       if (in && direction != 0) {
         in = false;
         dir_in = direction;
-        /*Serial.print("IN ");
-        Serial.print(direction);
-        Serial.print(" ");*/
       }
-      // Serial.print(u);
-      // Serial.print(",");
-      // Serial.print(d);
-      // Serial.print(",");
-      // Serial.print(l);
-      // Serial.print(",");
-      // Serial.println(r);
     }
   }
 }
