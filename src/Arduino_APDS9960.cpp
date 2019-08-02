@@ -1,5 +1,21 @@
 #include <Arduino_APDS9960.h>
 
+APDS9960::APDS9960(TwoWire &wire, int irqPin) :
+  wire(wire),
+  irqPin(irqPin),
+  in(false),
+  out(false),
+  direction(0),
+  dir_in(0),
+  threshold(30),
+  gesture(GESTURE_NONE)
+{
+}
+
+APDS9960::~APDS9960()
+{
+}
+
 bool APDS9960::begin() {
   wire.begin();
     
@@ -187,13 +203,6 @@ int APDS9960::gestureFIFOAvailable() {
   return r;
 }
 
-bool in = false;
-bool out = false;
-int direction = 0;
-int dir_in = 0;
-int gesture = GESTURE_NONE;
-
-uint8_t threshold = 30;
 int APDS9960::handleGesture() {
   while (true) {
     int available = gestureFIFOAvailable();
