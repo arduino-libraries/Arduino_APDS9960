@@ -52,6 +52,7 @@ private:
   TwoWire& _wire;
   int _intPin;
 
+  bool _gestureEnabled;
   bool _gestureIn;
   int _gestureDirection;
   int _gestureDirIn;

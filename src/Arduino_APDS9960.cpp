@@ -3,6 +3,7 @@
 APDS9960::APDS9960(TwoWire& wire, int intPin) :
   _wire(wire),
   _intPin(intPin),
+  _gestureEnabled(false),
   _gestureIn(false),
   _gestureDirection(0),
   _gestureDirIn(0),
@@ -51,6 +52,8 @@ bool APDS9960::begin() {
 void APDS9960::end() {
   // Disable everything
   setENABLE(0x00);
+
+  _gestureEnabled = false;
 }
 
 // Sets the LED current boost value:
@@ -249,7 +252,11 @@ int APDS9960::handleGesture() {
 }
 
 int APDS9960::gestureAvailable() {
-  enableGesture();
+  if (!_gestureEnabled) {
+    enableGesture();
+
+    _gestureEnabled = true;
+  }
 
   if (_intPin > -1) {
     if (digitalRead(_intPin) != LOW) {
