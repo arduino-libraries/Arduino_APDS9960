@@ -14,7 +14,9 @@ enum {
 
 class APDS9960 {
 public:
-  APDS9960(TwoWire &wire, int irqPin) : wire(wire), irqPin(irqPin) {}
+  APDS9960(TwoWire &wire, int irqPin);
+  virtual ~APDS9960();
+
   bool begin();
   void end();
 
@@ -50,6 +52,14 @@ public:
 private:
   TwoWire &wire;
   int irqPin;
+
+  bool in;
+  bool out;
+  int direction;
+  int dir_in;
+  uint8_t threshold;
+  int gesture;
+
   bool write(uint8_t val);
   bool write(uint8_t reg, uint8_t val);
   bool read(uint8_t reg, uint8_t *val);
