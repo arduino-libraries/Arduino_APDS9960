@@ -1,14 +1,13 @@
 #include <Arduino_APDS9960.h>
 
-APDS9960::APDS9960(TwoWire &wire, int irqPin) :
-  wire(wire),
-  irqPin(irqPin),
-  in(false),
-  out(false),
-  direction(0),
-  dir_in(0),
-  threshold(30),
-  gesture(GESTURE_NONE)
+APDS9960::APDS9960(TwoWire& wire, int intPin) :
+  _wire(wire),
+  _intPin(intPin),
+  _gestureIn(false),
+  _gestureDirection(0),
+  _gestureDirIn(0),
+  _gestureThreshold(30),
+  _detectedGesture(GESTURE_NONE)
 {
 }
 
@@ -17,7 +16,7 @@ APDS9960::~APDS9960()
 }
 
 bool APDS9960::begin() {
-  wire.begin();
+  _wire.begin();
     
   // Check ID register
   uint8_t id;
@@ -41,8 +40,8 @@ bool APDS9960::begin() {
   // enable power
   if (!enablePower()) return false;
 
-  if (irqPin > -1) {
-    pinMode(irqPin, INPUT);
+  if (_intPin > -1) {
+    pinMode(_intPin, INPUT);
   }
 
   return true;
@@ -159,33 +158,33 @@ bool APDS9960::disableGesture() {
 #define APDS9960_ADDR 0x39
 
 bool APDS9960::write(uint8_t val) {
-  wire.beginTransmission(APDS9960_ADDR);
-  wire.write(val);
-  return wire.endTransmission() == 0;
+  _wire.beginTransmission(APDS9960_ADDR);
+  _wire.write(val);
+  return _wire.endTransmission() == 0;
 }
 
 bool APDS9960::write(uint8_t reg, uint8_t val) {
-  wire.beginTransmission(APDS9960_ADDR);
-  wire.write(reg);
-  wire.write(val);
-  return wire.endTransmission() == 0;
+  _wire.beginTransmission(APDS9960_ADDR);
+  _wire.write(reg);
+  _wire.write(val);
+  return _wire.endTransmission() == 0;
 }
 
 bool APDS9960::read(uint8_t reg, uint8_t *val) {
   if (!write(reg)) return false;
-  wire.requestFrom(APDS9960_ADDR, 1);
-  if (!wire.available()) return false;
-  *val = wire.read();
+  _wire.requestFrom(APDS9960_ADDR, 1);
+  if (!_wire.available()) return false;
+  *val = _wire.read();
   return true;
 }
 
 size_t APDS9960::readBlock(uint8_t reg, uint8_t *val, unsigned int len) {
     size_t i = 0;
     if (!write(reg)) return 0;
-    wire.requestFrom(APDS9960_ADDR, len);
-    while (wire.available()) {
+    _wire.requestFrom(APDS9960_ADDR, len);
+    while (_wire.available()) {
       if (i == len) return 0;
-      val[i++] = wire.read();
+      val[i++] = _wire.read();
     }
     return i;
 }
@@ -212,38 +211,37 @@ int APDS9960::handleGesture() {
       uint8_t u,d,l,r;
       u = fifo_data[i++];
       d = fifo_data[i++];
-      l   = fifo_data[i++];
+      l = fifo_data[i++];
       r = fifo_data[i++];
       if (u>l && u>r && u>d) {
-        direction = 1;
+        _gestureDirection = 1;
       }
       if (d>l && d>r && d>u) {
-        direction = 2;
+        _gestureDirection = 2;
       }
       if (l>r && l>u && l>d) {
-        direction = 3;
+        _gestureDirection = 3;
       }
       if (r>l && r>u && r>d) {
-        direction = 4;
+        _gestureDirection = 4;
       }
 
-      if (u<threshold && d<threshold && l<threshold && r<threshold) {
-        in = true;
-        if (direction != 0) {
-
-          if (direction == 1 && dir_in == 2) { gesture = GESTURE_DOWN; }
-          if (direction == 2 && dir_in == 1) { gesture = GESTURE_UP;}
-          if (direction == 3 && dir_in == 4) { gesture = GESTURE_RIGHT;}
-          if (direction == 4 && dir_in == 3) { gesture = GESTURE_LEFT;}
-          direction = 0;
-          dir_in = 0;
+      if (u<_gestureThreshold && d<_gestureThreshold && l<_gestureThreshold && r<_gestureThreshold) {
+        _gestureIn = true;
+        if (_gestureDirection != 0) {
+          if (_gestureDirection == 1 && _gestureDirIn == 2) { _detectedGesture = GESTURE_DOWN; }
+          if (_gestureDirection == 2 && _gestureDirIn == 1) { _detectedGesture = GESTURE_UP;}
+          if (_gestureDirection == 3 && _gestureDirIn == 4) { _detectedGesture = GESTURE_RIGHT;}
+          if (_gestureDirection == 4 && _gestureDirIn == 3) { _detectedGesture = GESTURE_LEFT;}
+          _gestureDirection = 0;
+          _gestureDirIn = 0;
         }
         continue;
       }
 
-      if (in && direction != 0) {
-        in = false;
-        dir_in = direction;
+      if (_gestureIn && _gestureDirection != 0) {
+        _gestureIn = false;
+        _gestureDirIn = _gestureDirection;
       }
     }
   }
@@ -252,8 +250,8 @@ int APDS9960::handleGesture() {
 int APDS9960::gestureAvailable() {
   enableGesture();
 
-  if (irqPin > -1) {
-    if (digitalRead(irqPin) != LOW) {
+  if (_intPin > -1) {
+    if (digitalRead(_intPin) != LOW) {
       return 0;
     }
   } else if (gestureFIFOAvailable() <= 0) {
@@ -262,15 +260,15 @@ int APDS9960::gestureAvailable() {
 
   handleGesture();
 
-  return (gesture == GESTURE_NONE) ? 0 : 1;
+  return (_detectedGesture == GESTURE_NONE) ? 0 : 1;
 }
 
 int APDS9960::readGesture() {
-  int result = gesture;
+  int gesture = _detectedGesture;
 
-  gesture = GESTURE_NONE;
+  _detectedGesture = GESTURE_NONE;
 
-  return result;
+  return gesture;
 }
 
 int APDS9960::colorAvailable() {
