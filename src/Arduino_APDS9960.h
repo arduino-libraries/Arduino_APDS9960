@@ -6,14 +6,14 @@
 
 class APDS9960 {
 public:
-  APDS9960(TwoWire &wire) : wire(wire) {}
+  APDS9960(TwoWire &wire, int irqPin) : wire(wire), irqPin(irqPin) {}
   bool begin();
+  void end();
 
-  bool startGestureSensor();
   bool setLEDBoost(uint8_t boost);
   bool setGestureIntEnable(bool en);
   bool setGestureMode(bool en);
-  int gestureAvailable();
+  int gestureFIFOAvailable();
   int handleGesture();
 
   bool enablePower();
@@ -29,6 +29,9 @@ public:
 
   void dump();
 
+  int gestureAvailable();
+  int readGesture();
+
   int colorAvailable();
   bool readColor(int& r, int& g, int& b);
   bool readColor(int& r, int& g, int& b, int& c);
@@ -38,6 +41,7 @@ public:
 
 private:
   TwoWire &wire;
+  int irqPin;
   bool write(uint8_t val);
   bool write(uint8_t reg, uint8_t val);
   bool read(uint8_t reg, uint8_t *val);

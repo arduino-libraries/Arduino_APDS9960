@@ -10,18 +10,6 @@ bool APDS9960::begin() {
     
   // Disable everything (it may be enabled from a previous sketch)
   if (!setENABLE(0x00)) return false;
-  // set ADC integration time to 10 ms
-  if (!setATIME(256 - (10 / 2.78))) return false;
-  // set ADC gain 4x (0x00 => 1x, 0x01 => 4x, 0x02 => 16x, 0x03 => 64x)
-  if (!setCONTROL(0x02)) return false;
-  delay(10);
-  // enable power
-  if (!enablePower()) return false;
-
-  return true;
-}
-
-bool APDS9960::startGestureSensor() {
   if (!setWTIME(0xFF)) return false;
   if (!setGPULSE(0xC9)) return false; // 32us, 10 pulses // 0x40 = 8us, 1 pulse
   if (!setPPULSE(0x89)) return false; // 16us, 10 pulses // 0x40 = 8us, 1 pulse
@@ -30,10 +18,29 @@ bool APDS9960::startGestureSensor() {
   if (!setGestureMode(true)) return false;
   if (!enablePower()) return false;
   if (!enableWait()) return false;
-  if (!enableProximity()) return false;
-  if (!enableGesture()) return false;
+  // set ADC integration time to 10 ms
+  if (!setATIME(256 - (10 / 2.78))) return false;
+  // set ADC gain 4x (0x00 => 1x, 0x01 => 4x, 0x02 => 16x, 0x03 => 64x)
+  if (!setCONTROL(0x02)) return false;
+  delay(10);
+  // enable power
+  if (!enablePower()) return false;
+
+  pinMode(irqPin, INPUT);
+
   return true;
 }
+
+void APDS9960::end() {
+  // Disable everything
+  setENABLE(0x00);
+}
+
+// bool APDS9960::startGestureSensor() {
+
+//   if (!enableGesture()) return false;
+//   return true;
+// }
 
 // Sets the LED current boost value:
 // 0=100%, 1=150%, 2=200%, 3=300%
@@ -172,7 +179,7 @@ size_t APDS9960::readBlock(uint8_t reg, uint8_t *val, unsigned int len) {
     return i;
 }
 
-int APDS9960::gestureAvailable() {
+int APDS9960::gestureFIFOAvailable() {
   uint8_t r;
   if (!getGSTATUS(&r)) return -1;
   if ((r & 0x01) == 0x00) return -2;
@@ -184,11 +191,12 @@ bool in = false;
 bool out = false;
 int direction = 0;
 int dir_in = 0;
+int gesture = -1;
 
 uint8_t threshold = 30;
 int APDS9960::handleGesture() {
   while (true) {
-    int available = gestureAvailable();
+    int available = gestureFIFOAvailable();
     if (available <= 0) return 0;
 
     uint8_t fifo_data[128];
@@ -200,7 +208,7 @@ int APDS9960::handleGesture() {
       uint8_t u,d,l,r;
       u = fifo_data[i++];
       d = fifo_data[i++];
-      l = fifo_data[i++];
+      l   = fifo_data[i++];
       r = fifo_data[i++];
       if (u>l && u>r && u>d) {
         direction = 1;
@@ -218,13 +226,13 @@ int APDS9960::handleGesture() {
       if (u<threshold && d<threshold && l<threshold && r<threshold) {
         in = true;
         if (direction != 0) {
-          Serial.print(" OUT ");
-          Serial.print(direction);
-          if (direction == 1 && dir_in == 2) Serial.print(" DOWN!");
-          if (direction == 2 && dir_in == 1) Serial.print(" UP!");
-          if (direction == 3 && dir_in == 4) Serial.print(" RIGHT!");
-          if (direction == 4 && dir_in == 3) Serial.print(" LEFT!");
-          Serial.println();
+          /*Serial.print(" OUT ");
+          Serial.print(direction);*/
+          if (direction == 1 && dir_in == 2) { /*Serial.print(" DOWN!");*/ gesture = 1; }
+          if (direction == 2 && dir_in == 1) { /*Serial.print(" UP!");*/ gesture = 2;}
+          if (direction == 3 && dir_in == 4) { /*Serial.print(" RIGHT!");*/ gesture = 3;}
+          if (direction == 4 && dir_in == 3) { /*Serial.print(" LEFT!");*/ gesture = 4;}
+          /*Serial.println();*/
           direction = 0;
           dir_in = 0;
         }
@@ -234,9 +242,9 @@ int APDS9960::handleGesture() {
       if (in && direction != 0) {
         in = false;
         dir_in = direction;
-        Serial.print("IN ");
+        /*Serial.print("IN ");
         Serial.print(direction);
-        Serial.print(" ");
+        Serial.print(" ");*/
       }
       // Serial.print(u);
       // Serial.print(",");
@@ -274,6 +282,26 @@ void APDS9960::dump() {
     Serial.print(": 0x");
     Serial.println(val, HEX);
   }
+}
+
+int APDS9960::gestureAvailable() {
+  enableGesture();
+
+  if (digitalRead(irqPin) != LOW) {
+    return 0;
+  }
+
+  handleGesture();
+
+  return (gesture > 0);
+}
+
+int APDS9960::readGesture() {
+  int result = gesture;
+
+  gesture = 0;
+
+  return result;
 }
 
 int APDS9960::colorAvailable() {

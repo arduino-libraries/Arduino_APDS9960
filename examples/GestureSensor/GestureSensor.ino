@@ -3,13 +3,10 @@
 
 #define APDS9960_INT_PIN 26 // Needs to be an interrupt pin
 
-APDS9960 apds(Wire1);
-volatile bool apdsNeedsAttention = false;
+APDS9960 apds(Wire1, APDS9960_INT_PIN);
 
 void setup() {
   Serial.begin(9600);
-  pinMode(APDS9960_INT_PIN, INPUT);
-  attachInterrupt(APDS9960_INT_PIN, apdsInterruptRoutine, FALLING);
 
   while (!Serial) {}
   if (!apds.begin()) {
@@ -17,21 +14,9 @@ void setup() {
   } else {
     Serial.println("Initialized OK!");
   }
-  if (apds.startGestureSensor()) {
-    Serial.println("Gesture sensor is now running");
-  } else {
-    Serial.println("Something went wrong during gesture sensor init!");
-  }
-  apds.dump();
 }
-
-void apdsInterruptRoutine() {
-  apdsNeedsAttention = true;
-}
-
 void loop() {
-  if (apdsNeedsAttention) {
-    apdsNeedsAttention = false;
-    apds.handleGesture();
+  if (apds.gestureAvailable()) {
+    Serial.println(apds.readGesture());
   }
 }
