@@ -266,33 +266,6 @@ int APDS9960::handleGesture() {
   }
 }
 
-void APDS9960::dump() {
-  uint8_t reg;
-  uint8_t val;
-
-  for (reg = 0x80; reg <= 0xAF; reg++) {
-    if ((reg != 0x82) && \
-        (reg != 0x8A) && \
-        (reg != 0x91) && \
-        (reg != 0xA8) && \
-        (reg != 0xAC) && \
-        (reg != 0xAD) )
-    {
-      read(reg, &val);
-      Serial.print(reg, HEX);
-      Serial.print(": 0x");
-      Serial.println(val, HEX);
-    }
-  }
-
-  for (reg = 0xE4; reg <= 0xE7; reg++) {
-    read(reg, &val);
-    Serial.print(reg, HEX);
-    Serial.print(": 0x");
-    Serial.println(val, HEX);
-  }
-}
-
 int APDS9960::gestureAvailable() {
   enableGesture();
 
