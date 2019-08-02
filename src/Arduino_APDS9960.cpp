@@ -190,7 +190,7 @@ bool in = false;
 bool out = false;
 int direction = 0;
 int dir_in = 0;
-int gesture = -1;
+int gesture = GESTURE_NONE;
 
 uint8_t threshold = 30;
 int APDS9960::handleGesture() {
@@ -227,10 +227,10 @@ int APDS9960::handleGesture() {
         if (direction != 0) {
           /*Serial.print(" OUT ");
           Serial.print(direction);*/
-          if (direction == 1 && dir_in == 2) { /*Serial.print(" DOWN!");*/ gesture = 1; }
-          if (direction == 2 && dir_in == 1) { /*Serial.print(" UP!");*/ gesture = 2;}
-          if (direction == 3 && dir_in == 4) { /*Serial.print(" RIGHT!");*/ gesture = 3;}
-          if (direction == 4 && dir_in == 3) { /*Serial.print(" LEFT!");*/ gesture = 4;}
+          if (direction == 1 && dir_in == 2) { /*Serial.print(" DOWN!");*/ gesture = GESTURE_DOWN; }
+          if (direction == 2 && dir_in == 1) { /*Serial.print(" UP!");*/ gesture = GESTURE_UP;}
+          if (direction == 3 && dir_in == 4) { /*Serial.print(" RIGHT!");*/ gesture = GESTURE_RIGHT;}
+          if (direction == 4 && dir_in == 3) { /*Serial.print(" LEFT!");*/ gesture = GESTURE_LEFT;}
           /*Serial.println();*/
           direction = 0;
           dir_in = 0;
@@ -265,13 +265,13 @@ int APDS9960::gestureAvailable() {
 
   handleGesture();
 
-  return (gesture > 0);
+  return (gesture == GESTURE_NONE) ? 0 : 1;
 }
 
 int APDS9960::readGesture() {
   int result = gesture;
 
-  gesture = 0;
+  gesture = GESTURE_NONE;
 
   return result;
 }

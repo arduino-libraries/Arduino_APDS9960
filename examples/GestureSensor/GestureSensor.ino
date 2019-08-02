@@ -17,6 +17,28 @@ void setup() {
 }
 void loop() {
   if (apds.gestureAvailable()) {
-    Serial.println(apds.readGesture());
+    int gesture = apds.readGesture();
+
+    switch (gesture) {
+      case GESTURE_UP:
+        Serial.println("Detected UP gesture");
+        break;
+
+      case GESTURE_DOWN:
+        Serial.println("Detected DOWN gesture");
+        break;
+
+      case GESTURE_LEFT:
+        Serial.println("Detected LEFT gesture");
+        break;
+
+      case GESTURE_RIGHT:
+        Serial.println("Detected RIGHT gesture");
+        break;
+
+      default:
+        // ignore
+        break;
+    }
   }
 }
