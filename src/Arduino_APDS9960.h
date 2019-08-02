@@ -14,7 +14,7 @@ enum {
 
 class APDS9960 {
 public:
-  APDS9960(TwoWire &wire, int irqPin);
+  APDS9960(TwoWire &wire, int intPin);
   virtual ~APDS9960();
 
   bool begin();
@@ -49,15 +49,14 @@ private:
   bool disableGesture();
 
 private:
-  TwoWire &wire;
-  int irqPin;
+  TwoWire& _wire;
+  int _intPin;
 
-  bool in;
-  bool out;
-  int direction;
-  int dir_in;
-  uint8_t threshold;
-  int gesture;
+  bool _gestureIn;
+  int _gestureDirection;
+  int _gestureDirIn;
+  uint8_t _gestureThreshold;
+  int _detectedGesture;
 
   bool write(uint8_t val);
   bool write(uint8_t reg, uint8_t val);
