@@ -22,6 +22,7 @@ readColor	KEYWORD2
 proximityAvailable	KEYWORD2
 readProximity	KEYWORD2
 setGestureThreshold	KEYWORD2
+setInterruptPin	KEYWORD2
 
 ###########################################
 # Constants

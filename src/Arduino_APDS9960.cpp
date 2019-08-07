@@ -90,6 +90,10 @@ void APDS9960::setGestureThreshold(uint8_t threshold) {
   _gestureThreshold = threshold;
 }
 
+void APDS9960::setInterruptPin(int pin) {
+  _intPin = pin;
+}
+
 bool APDS9960::setGestureIntEnable(bool en) {
     uint8_t r;
     if (!getGCONF4(&r)) return false;
