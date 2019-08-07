@@ -20,6 +20,7 @@
 #ifndef ARDUINO_APDS9960
 #define ARDUINO_APDS9960
 
+#include <Arduino.h>
 #include <Wire.h>
 
 enum {
@@ -49,6 +50,8 @@ public:
   int readProximity();
 
   void setGestureThreshold(uint8_t threshold);
+
+  void setInterruptPin(int pin);
 
 private:
   bool setLEDBoost(uint8_t boost);
