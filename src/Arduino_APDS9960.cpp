@@ -237,14 +237,13 @@ int APDS9960::handleGesture() {
     uint8_t fifo_data[128];
     uint8_t bytes_read = readGFIFO_U(fifo_data, available * 4);
     if (bytes_read == 0) return 0;
-    if (bytes_read < 4) continue;
 
-    for (int i = 0; i < bytes_read;) {
+    for (int i = 0; i+3 < bytes_read; i+=4) {
       uint8_t u,d,l,r;
-      u = fifo_data[i++];
-      d = fifo_data[i++];
-      l = fifo_data[i++];
-      r = fifo_data[i++];
+      u = fifo_data[i];
+      d = fifo_data[i+1];
+      l = fifo_data[i+2];
+      r = fifo_data[i+3];
       if (u>l && u>r && u>d) {
         _gestureDirection = 1;
       }
