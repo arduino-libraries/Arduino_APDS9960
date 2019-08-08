@@ -28,7 +28,7 @@ APDS9960::APDS9960(TwoWire& wire, int intPin) :
   _gestureDirectionY(0),
   _gestureDirInX(0),
   _gestureDirInY(0),
-  _gestureSensitivity(40),
+  _gestureSensitivity(20),
   _gestureThreshold(30),
   _detectedGesture(GESTURE_NONE)
 {
@@ -93,8 +93,9 @@ void APDS9960::setGestureThreshold(uint8_t threshold) {
   _gestureThreshold = threshold;
 }
 
-void APDS9960::setGestureSensitivity(uint8_t sensitivty) {
-  _gestureSensitivity = sensitivty;
+void APDS9960::setGestureSensitivity(uint8_t sensitivity) {
+  if (sensitivity > 100) sensitivity = 100;
+  _gestureSensitivity = 100 - sensitivity;
 }
 
 void APDS9960::setInterruptPin(int pin) {

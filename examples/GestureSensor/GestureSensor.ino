@@ -26,6 +26,13 @@ void setup() {
     Serial.println("Error initializing APDS9960 sensor!");
   }
 
+  // for setSensitivity(..) a value between 1 and 100 is required.
+  // Higher values makes the gesture recognition more sensible but less accurate
+  // (a wrong gesture may be detected). Lower values makes the gesture recognition
+  // more accurate but less sensible (some gestures may be missed).
+  // Default is 80
+  //APDS.setSensitivity(80);
+
   Serial.println("Detecting gestures ...");
 }
 void loop() {
