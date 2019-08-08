@@ -24,8 +24,10 @@ APDS9960::APDS9960(TwoWire& wire, int intPin) :
   _intPin(intPin),
   _gestureEnabled(false),
   _gestureIn(false),
-  _gestureDirection(0),
-  _gestureDirIn(0),
+  _gestureDirectionX(0),
+  _gestureDirectionY(0),
+  _gestureDirInX(0),
+  _gestureDirInY(0),
   _gestureThreshold(30),
   _detectedGesture(GESTURE_NONE)
 {
@@ -244,35 +246,46 @@ int APDS9960::handleGesture() {
       d = fifo_data[i+1];
       l = fifo_data[i+2];
       r = fifo_data[i+3];
-      if (u>l && u>r && u>d) {
-        _gestureDirection = 1;
-      }
-      if (d>l && d>r && d>u) {
-        _gestureDirection = 2;
-      }
-      if (l>r && l>u && l>d) {
-        _gestureDirection = 3;
-      }
-      if (r>l && r>u && r>d) {
-        _gestureDirection = 4;
-      }
+      // Serial.print(u);
+      // Serial.print(",");
+      // Serial.print(d);
+      // Serial.print(",");
+      // Serial.print(l);
+      // Serial.print(",");
+      // Serial.println(r);
 
       if (u<_gestureThreshold && d<_gestureThreshold && l<_gestureThreshold && r<_gestureThreshold) {
         _gestureIn = true;
-        if (_gestureDirection != 0) {
-          if (_gestureDirection == 1 && _gestureDirIn == 2) { _detectedGesture = GESTURE_DOWN; }
-          if (_gestureDirection == 2 && _gestureDirIn == 1) { _detectedGesture = GESTURE_UP;}
-          if (_gestureDirection == 3 && _gestureDirIn == 4) { _detectedGesture = GESTURE_RIGHT;}
-          if (_gestureDirection == 4 && _gestureDirIn == 3) { _detectedGesture = GESTURE_LEFT;}
-          _gestureDirection = 0;
-          _gestureDirIn = 0;
+        if (_gestureDirInX != 0 || _gestureDirInY != 0) {
+          int totalX = _gestureDirInX - _gestureDirectionX;
+          int totalY = _gestureDirInY - _gestureDirectionY;
+          Serial.print("OUT ");
+          Serial.print(totalX);
+          Serial.print(",");
+          Serial.println(totalY);
+          if (totalX < -40) { _detectedGesture = GESTURE_LEFT; }
+          if (totalX > 40) { _detectedGesture = GESTURE_RIGHT; }
+          if (totalY < -40) { _detectedGesture = GESTURE_DOWN; }
+          if (totalY > 40) { _detectedGesture = GESTURE_UP; }
+          _gestureDirectionX = 0;
+          _gestureDirectionY = 0;
+          _gestureDirInX = 0;
+          _gestureDirInY = 0;
         }
         continue;
       }
 
-      if (_gestureIn && _gestureDirection != 0) {
+      _gestureDirectionX = r - l;
+      _gestureDirectionY = u - d;
+      if (_gestureIn) {
         _gestureIn = false;
-        _gestureDirIn = _gestureDirection;
+        _gestureDirInX = _gestureDirectionX;
+        _gestureDirInY = _gestureDirectionY;
+        // Serial.print("IN ");
+        // Serial.print(_gestureDirInX);
+        // Serial.print(",");
+        // Serial.print(_gestureDirInY);
+        // Serial.print(" ");
       }
     }
   }

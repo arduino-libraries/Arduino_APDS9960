@@ -78,8 +78,10 @@ private:
 
   bool _gestureEnabled;
   bool _gestureIn;
-  int _gestureDirection;
-  int _gestureDirIn;
+  int _gestureDirectionX;
+  int _gestureDirectionY;
+  int _gestureDirInX;
+  int _gestureDirInY;
   uint8_t _gestureThreshold;
   int _detectedGesture;
 
