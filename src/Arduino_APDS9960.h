@@ -53,8 +53,9 @@ public:
 
   void setInterruptPin(int pin);
 
-private:
   bool setLEDBoost(uint8_t boost);
+
+private:
   bool setGestureIntEnable(bool en);
   bool setGestureMode(bool en);
   int gestureFIFOAvailable();
