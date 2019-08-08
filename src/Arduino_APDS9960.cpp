@@ -28,6 +28,7 @@ APDS9960::APDS9960(TwoWire& wire, int intPin) :
   _gestureDirectionY(0),
   _gestureDirInX(0),
   _gestureDirInY(0),
+  _gestureSensitivity(40),
   _gestureThreshold(30),
   _detectedGesture(GESTURE_NONE)
 {
@@ -90,6 +91,10 @@ bool APDS9960::setLEDBoost(uint8_t boost) {
 
 void APDS9960::setGestureThreshold(uint8_t threshold) {
   _gestureThreshold = threshold;
+}
+
+void APDS9960::setGestureSensitivity(uint8_t sensitivty) {
+  _gestureSensitivity = sensitivty;
 }
 
 void APDS9960::setInterruptPin(int pin) {
@@ -263,10 +268,10 @@ int APDS9960::handleGesture() {
           // Serial.print(totalX);
           // Serial.print(",");
           // Serial.println(totalY);
-          if (totalX < -40) { _detectedGesture = GESTURE_LEFT; }
-          if (totalX > 40) { _detectedGesture = GESTURE_RIGHT; }
-          if (totalY < -40) { _detectedGesture = GESTURE_DOWN; }
-          if (totalY > 40) { _detectedGesture = GESTURE_UP; }
+          if (totalX < -_gestureSensitivity) { _detectedGesture = GESTURE_LEFT; }
+          if (totalX > _gestureSensitivity) { _detectedGesture = GESTURE_RIGHT; }
+          if (totalY < -_gestureSensitivity) { _detectedGesture = GESTURE_DOWN; }
+          if (totalY > _gestureSensitivity) { _detectedGesture = GESTURE_UP; }
           _gestureDirectionX = 0;
           _gestureDirectionY = 0;
           _gestureDirInX = 0;

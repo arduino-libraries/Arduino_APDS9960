@@ -50,6 +50,7 @@ public:
   int readProximity();
 
   void setGestureThreshold(uint8_t threshold);
+  void setGestureSensitivity(uint8_t sensitivity);
 
   void setInterruptPin(int pin);
 
@@ -82,6 +83,7 @@ private:
   int _gestureDirectionY;
   int _gestureDirInX;
   int _gestureDirInY;
+  int _gestureSensitivity;
   uint8_t _gestureThreshold;
   int _detectedGesture;
 
