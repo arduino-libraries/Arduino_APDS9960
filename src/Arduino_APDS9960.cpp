@@ -29,7 +29,6 @@ APDS9960::APDS9960(TwoWire& wire, int intPin) :
   _gestureDirInX(0),
   _gestureDirInY(0),
   _gestureSensitivity(20),
-  _gestureThreshold(30),
   _detectedGesture(GESTURE_NONE)
 {
 }
@@ -87,10 +86,6 @@ bool APDS9960::setLEDBoost(uint8_t boost) {
   r &= 0b11001111;
   r |= (boost << 4) & 0b00110000;
   return setCONFIG2(r);
-}
-
-void APDS9960::setGestureThreshold(uint8_t threshold) {
-  _gestureThreshold = threshold;
 }
 
 void APDS9960::setGestureSensitivity(uint8_t sensitivity) {
@@ -238,6 +233,7 @@ int APDS9960::gestureFIFOAvailable() {
 }
 
 int APDS9960::handleGesture() {
+  const int gestureThreshold = 30;
   while (true) {
     int available = gestureFIFOAvailable();
     if (available <= 0) return 0;
@@ -260,7 +256,7 @@ int APDS9960::handleGesture() {
       // Serial.print(",");
       // Serial.println(r);
 
-      if (u<_gestureThreshold && d<_gestureThreshold && l<_gestureThreshold && r<_gestureThreshold) {
+      if (u<gestureThreshold && d<gestureThreshold && l<gestureThreshold && r<gestureThreshold) {
         _gestureIn = true;
         if (_gestureDirInX != 0 || _gestureDirInY != 0) {
           int totalX = _gestureDirInX - _gestureDirectionX;
