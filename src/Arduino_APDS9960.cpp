@@ -259,10 +259,10 @@ int APDS9960::handleGesture() {
         if (_gestureDirInX != 0 || _gestureDirInY != 0) {
           int totalX = _gestureDirInX - _gestureDirectionX;
           int totalY = _gestureDirInY - _gestureDirectionY;
-          Serial.print("OUT ");
-          Serial.print(totalX);
-          Serial.print(",");
-          Serial.println(totalY);
+          // Serial.print("OUT ");
+          // Serial.print(totalX);
+          // Serial.print(",");
+          // Serial.println(totalY);
           if (totalX < -40) { _detectedGesture = GESTURE_LEFT; }
           if (totalX > 40) { _detectedGesture = GESTURE_RIGHT; }
           if (totalY < -40) { _detectedGesture = GESTURE_DOWN; }
