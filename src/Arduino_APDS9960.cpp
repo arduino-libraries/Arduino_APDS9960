@@ -123,6 +123,7 @@ bool APDS9960::setGestureMode(bool en)
 bool APDS9960::enablePower() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
+  if ((r & 0b00000001) != 0) return true;
   r |= 0b00000001;
   return setENABLE(r);
 }
@@ -130,6 +131,7 @@ bool APDS9960::enablePower() {
 bool APDS9960::disablePower() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
+  if ((r & 0b00000001) == 0) return true;
   r &= 0b11111110;
   return setENABLE(r);
 }
@@ -137,6 +139,7 @@ bool APDS9960::disablePower() {
 bool APDS9960::enableColor() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
+  if ((r & 0b00000010) != 0) return true;
   r |= 0b00000010;
   return setENABLE(r);
 }
@@ -144,6 +147,7 @@ bool APDS9960::enableColor() {
 bool APDS9960::disableColor() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
+  if ((r & 0b00000010) == 0) return true;
   r &= 0b11111101;
   return setENABLE(r);
 }
@@ -151,6 +155,7 @@ bool APDS9960::disableColor() {
 bool APDS9960::enableProximity() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
+  if ((r & 0b00000100) != 0) return true;
   r |= 0b00000100;
   return setENABLE(r);
 }
@@ -158,6 +163,7 @@ bool APDS9960::enableProximity() {
 bool APDS9960::disableProximity() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
+  if ((r & 0b00000100) == 0) return true;
   r &= 0b11111011;
   return setENABLE(r);
 }
@@ -165,6 +171,7 @@ bool APDS9960::disableProximity() {
 bool APDS9960::enableWait() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
+  if ((r & 0b00001000) != 0) return true;
   r |= 0b00001000;
   return setENABLE(r);
 }
@@ -172,6 +179,7 @@ bool APDS9960::enableWait() {
 bool APDS9960::disableWait() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
+  if ((r & 0b00001000) == 0) return true;
   r &= 0b11110111;
   return setENABLE(r);
 }
@@ -179,6 +187,7 @@ bool APDS9960::disableWait() {
 bool APDS9960::enableGesture() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
+  if ((r & 0b01000000) != 0) return true;
   r |= 0b01000000;
   return setENABLE(r);
 }
@@ -186,6 +195,7 @@ bool APDS9960::enableGesture() {
 bool APDS9960::disableGesture() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
+  if ((r & 0b01000000) == 0) return true;
   r &= 0b10111111;
   return setENABLE(r);
 }
