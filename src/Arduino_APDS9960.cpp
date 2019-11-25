@@ -187,17 +187,27 @@ bool APDS9960::disableWait() {
 bool APDS9960::enableGesture() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
-  if ((r & 0b01000000) != 0) return true;
+  if ((r & 0b01000000) != 0) {
+    _gestureEnabled = true;
+    return true;
+  }
   r |= 0b01000000;
-  return setENABLE(r);
+  bool res = setENABLE(r);
+  _gestureEnabled = res;
+  return res;
 }
 
 bool APDS9960::disableGesture() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
-  if ((r & 0b01000000) == 0) return true;
+  if ((r & 0b01000000) == 0) {
+    _gestureEnabled = false;
+    return true;
+  }
   r &= 0b10111111;
-  return setENABLE(r);
+  bool res = setENABLE(r);
+  _gestureEnabled = !res; // (res == true) if successfully disabled
+  return res;
 }
 
 #define APDS9960_ADDR 0x39
@@ -304,11 +314,7 @@ int APDS9960::handleGesture() {
 }
 
 int APDS9960::gestureAvailable() {
-  if (!_gestureEnabled) {
-    enableGesture();
-
-    _gestureEnabled = true;
-  }
+  if (!_gestureEnabled) enableGesture();
 
   if (_intPin > -1) {
     if (digitalRead(_intPin) != LOW) {
