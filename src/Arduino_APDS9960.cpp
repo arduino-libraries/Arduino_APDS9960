@@ -23,6 +23,8 @@ APDS9960::APDS9960(TwoWire& wire, int intPin) :
   _wire(wire),
   _intPin(intPin),
   _gestureEnabled(false),
+  _proximityEnabled(false),
+  _colorEnabled(false),
   _gestureIn(false),
   _gestureDirectionX(0),
   _gestureDirectionY(0),
@@ -139,33 +141,53 @@ bool APDS9960::disablePower() {
 bool APDS9960::enableColor() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
-  if ((r & 0b00000010) != 0) return true;
+  if ((r & 0b00000010) != 0) {
+    _colorEnabled = true;
+    return true;
+  }
   r |= 0b00000010;
-  return setENABLE(r);
+  bool res = setENABLE(r);
+  _colorEnabled = res;
+  return res;
 }
 
 bool APDS9960::disableColor() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
-  if ((r & 0b00000010) == 0) return true;
+  if ((r & 0b00000010) == 0) {
+    _colorEnabled = false;
+    return true;
+  }
   r &= 0b11111101;
-  return setENABLE(r);
+  bool res = setENABLE(r);
+  _colorEnabled = !res; // (res == true) if succesfully disabled
+  return res;
 }
 
 bool APDS9960::enableProximity() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
-  if ((r & 0b00000100) != 0) return true;
+  if ((r & 0b00000100) != 0) {
+    _proximityEnabled = true;
+    return true;
+  }
   r |= 0b00000100;
-  return setENABLE(r);
+  bool res = setENABLE(r);
+  _proximityEnabled = res;
+  return res;
 }
 
 bool APDS9960::disableProximity() {
   uint8_t r;
   if (!getENABLE(&r)) return false;
-  if ((r & 0b00000100) == 0) return true;
+  if ((r & 0b00000100) == 0) {
+    _proximityEnabled = false;
+    return true;
+  }
   r &= 0b11111011;
-  return setENABLE(r);
+  bool res = setENABLE(r);
+  _proximityEnabled = !res; // (res == true) if succesfully disabled
+  return res;
 }
 
 bool APDS9960::enableWait() {
