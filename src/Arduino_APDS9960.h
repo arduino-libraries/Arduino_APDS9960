@@ -77,6 +77,8 @@ private:
   int _intPin;
 
   bool _gestureEnabled;
+  bool _proximityEnabled;
+  bool _colorEnabled;
   bool _gestureIn;
   int _gestureDirectionX;
   int _gestureDirectionY;
