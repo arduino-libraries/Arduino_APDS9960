@@ -347,7 +347,9 @@ int APDS9960::gestureAvailable() {
   }
 
   handleGesture();
-
+  if (_proximityEnabled) {
+    setGestureMode(false);
+  }
   return (_detectedGesture == GESTURE_NONE) ? 0 : 1;
 }
 
