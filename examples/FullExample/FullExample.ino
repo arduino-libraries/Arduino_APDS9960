@@ -37,7 +37,7 @@ void loop() {
     proximity = APDS.readProximity();
   }
 
-  // check if a proximity reading is available
+  // check if a gesture reading is available
   if (APDS.gestureAvailable()) {
     int gesture = APDS.readGesture();
     switch (gesture) {
