@@ -78,7 +78,6 @@ void loop() {
     Serial.print(",");
     Serial.print(g);
     Serial.print(",");
-    Serial.print(b);
-    Serial.println("\r");
+    Serial.println(b);
   }
 }
