@@ -8,3 +8,5 @@ image:https://github.com/{repository-owner}/{repository-name}/actions/workflows/
 image:https://github.com/{repository-owner}/{repository-name}/actions/workflows/spell-check.yml/badge.svg["Spell Check status", link="https://github.com/{repository-owner}/{repository-name}/actions/workflows/spell-check.yml"]
 
 A library for the APDS-9960 sensor, allows you to read gestures, color, and proximity on your Arduino Nano 33 BLE Sense board and other boards with sensor attached via I2C.
+
+For more information about this library please visit us at https://www.arduino.cc/en/Reference/ArduinoAPDS9960
