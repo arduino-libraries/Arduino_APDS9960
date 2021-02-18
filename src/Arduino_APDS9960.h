@@ -55,6 +55,23 @@ public:
 
   bool setLEDBoost(uint8_t boost);
 
+  //Interrupts
+  // Proximity interrupt
+  void enableProximityInterrupt();
+  void disableProximityInterrupt();
+  bool proximityInterrupt();
+  void clearProximityInterrupt();
+  void setProximityLowThreshold(uint8_t newThold);
+  void setProximityHighThreshold(uint8_t newThold);
+
+  // Light interrupt (Clear channel from RGBC)
+  void enableLightInterrupt();
+  void disableLightInterrupt();
+  bool lightInterrupt();
+  void clearLightInterrupt();
+  void setLightLowThreshold(uint16_t newThold);
+  void setLightHighThreshold(uint16_t newThold);
+
 private:
   bool setGestureIntEnable(bool en);
   bool setGestureMode(bool en);
@@ -72,6 +89,7 @@ private:
   bool enableGesture();
   bool disableGesture();
 
+  
 private:
   TwoWire& _wire;
   int _intPin;
