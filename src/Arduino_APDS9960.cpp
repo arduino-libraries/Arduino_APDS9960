@@ -66,8 +66,8 @@ bool APDS9960::begin() {
 
   //Clear remaining interrupts
   if(!setPERS(0b00010001)) return false;
-  clearLightInterrupt();
-  clearProximityInterrupt();
+  /*clearLightInterrupt();
+  clearProximityInterrupt();*/
   
   if (_intPin > -1) {
     pinMode(_intPin, INPUT);
@@ -511,13 +511,24 @@ void APDS9960::clearLightInterrupt(){
 }
 
 void APDS9960::setLightLowThreshold(uint16_t newThold){
+  Serial.print("set to ");
+  Serial.println(newThold);
   setAILTL(newThold);
   setAIHTL(newThold >> 8);
+
+
 }
 
 void APDS9960::setLightHighThreshold(uint16_t newThold){
+
   setAILTL(newThold);
   setAIHTL(newThold >> 8);
+
+
+  uint8_t final;
+  getENABLE(&final);
+  Serial.print("data: ");
+  Serial.println(final,BIN);
 }
 
 
