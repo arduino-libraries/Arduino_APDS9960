@@ -1,4 +1,9 @@
-= APDS9960 Library for Arduino =
+:repository-owner: arduino-libraries
+:repository-name: Arduino_APDS9960
+
+= {repository-name} Library for Arduino =
+
+image:https://github.com/{repository-owner}/{repository-name}/actions/workflows/spell-check.yml/badge.svg["Spell Check status", link="https://github.com/{repository-owner}/{repository-name}/actions/workflows/spell-check.yml"]
 
 A library for the APDS9960 sensor, allows you to read gestures, color, and proximity on your Arduino Nano 33 BLE Sense board and other boards with sensor attached via I2C.
 
