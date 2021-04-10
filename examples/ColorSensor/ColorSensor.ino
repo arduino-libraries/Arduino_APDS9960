@@ -1,7 +1,7 @@
 /*
-  APDS9960 - Color Sensor
+  APDS-9960 - Color Sensor
 
-  This example reads Color data from the on-board APDS9960 sensor of the
+  This example reads color data from the on-board APDS-9960 sensor of the
   Nano 33 BLE Sense and prints the color RGB (red, green, blue) values
   to the Serial Monitor once a second.
 
@@ -18,7 +18,7 @@ void setup() {
   while (!Serial);
 
   if (!APDS.begin()) {
-    Serial.println("Error initializing APDS9960 sensor.");
+    Serial.println("Error initializing APDS-9960 sensor.");
   }
 }
 
