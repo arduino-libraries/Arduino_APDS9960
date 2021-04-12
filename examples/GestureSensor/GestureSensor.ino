@@ -1,7 +1,7 @@
 /*
-  APDS9960 - Gesture Sensor
+  APDS-9960 - Gesture Sensor
 
-  This example reads gesture data from the on-board APDS9960 sensor of the
+  This example reads gesture data from the on-board APDS-9960 sensor of the
   Nano 33 BLE Sense and prints any detected gestures to the Serial Monitor.
 
   Gesture directions are as follows:
@@ -23,13 +23,13 @@ void setup() {
   while (!Serial);
 
   if (!APDS.begin()) {
-    Serial.println("Error initializing APDS9960 sensor!");
+    Serial.println("Error initializing APDS-9960 sensor!");
   }
 
   // for setGestureSensitivity(..) a value between 1 and 100 is required.
-  // Higher values makes the gesture recognition more sensible but less accurate
+  // Higher values make the gesture recognition more sensitive but less accurate
   // (a wrong gesture may be detected). Lower values makes the gesture recognition
-  // more accurate but less sensible (some gestures may be missed).
+  // more accurate but less sensitive (some gestures may be missed).
   // Default is 80
   //APDS.setGestureSensitivity(80);
 
@@ -37,7 +37,7 @@ void setup() {
 }
 void loop() {
   if (APDS.gestureAvailable()) {
-    // a gesture was detected, read and print to serial monitor
+    // a gesture was detected, read and print to Serial Monitor
     int gesture = APDS.readGesture();
 
     switch (gesture) {
