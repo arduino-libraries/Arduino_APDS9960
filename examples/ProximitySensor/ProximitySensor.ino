@@ -1,9 +1,9 @@
 /*
-  APDS9960 - Proximity Sensor
+  APDS-9960 - Proximity Sensor
 
-  This example reads proximity data from the on-board APDS9960 sensor of the
+  This example reads proximity data from the on-board APDS-9960 sensor of the
   Nano 33 BLE Sense and prints the proximity value to the Serial Monitor
-  every 100ms.
+  every 100 ms.
 
   The circuit:
   - Arduino Nano 33 BLE Sense
@@ -18,7 +18,7 @@ void setup() {
   while (!Serial);
 
   if (!APDS.begin()) {
-    Serial.println("Error initializing APDS9960 sensor!");
+    Serial.println("Error initializing APDS-9960 sensor!");
   }
 }
 

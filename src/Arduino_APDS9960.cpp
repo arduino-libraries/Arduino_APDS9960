@@ -165,7 +165,7 @@ bool APDS9960::disableColor() {
   }
   r &= 0b11111101;
   bool res = setENABLE(r);
-  _colorEnabled = !res; // (res == true) if succesfully disabled
+  _colorEnabled = !res; // (res == true) if successfully disabled
   return res;
 }
 
@@ -191,7 +191,7 @@ bool APDS9960::disableProximity() {
   }
   r &= 0b11111011;
   bool res = setENABLE(r);
-  _proximityEnabled = !res; // (res == true) if succesfully disabled
+  _proximityEnabled = !res; // (res == true) if successfully disabled
   return res;
 }
 

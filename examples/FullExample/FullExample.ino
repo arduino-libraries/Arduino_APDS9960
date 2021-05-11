@@ -1,7 +1,7 @@
 /*
-  APDS9960 - All sensor data from APDS9960
+  APDS-9960 - All sensor data from APDS-9960
 
-  This example reads all data from the on-board APDS9960 sensor of the
+  This example reads all data from the on-board APDS-9960 sensor of the
   Nano 33 BLE Sense:
    - color RGB (red, green, blue)
    - proximity
@@ -18,10 +18,10 @@
 
 void setup() {
   Serial.begin(9600);
-  while (!Serial); // Wait for serial monitor to open
+  while (!Serial); // Wait for Serial Monitor to open
 
   if (!APDS.begin()) {
-    Serial.println("Error initializing APDS9960 sensor.");
+    Serial.println("Error initializing APDS-9960 sensor.");
     while (true); // Stop forever
   }
 }
@@ -37,7 +37,7 @@ void loop() {
     proximity = APDS.readProximity();
   }
 
-  // check if a gesture reading is available
+  // Check if a gesture reading is available
   if (APDS.gestureAvailable()) {
     int gesture = APDS.readGesture();
     switch (gesture) {
@@ -58,22 +58,22 @@ void loop() {
         break;
 
       default:
-        // ignore
+        // Ignore
         break;
     }
   }
 
-  // check if a color reading is available
+  // Check if a color reading is available
   if (APDS.colorAvailable()) {
     APDS.readColor(r, g, b);
   }
 
-  // Print updates every 100ms
+  // Print updates every 100 ms
   if (millis() - lastUpdate > 100) {
     lastUpdate = millis();
     Serial.print("PR=");
     Serial.print(proximity);
-    Serial.print(" rgb=");
+    Serial.print(" RGB=");
     Serial.print(r);
     Serial.print(",");
     Serial.print(g);
