@@ -2,8 +2,9 @@
   APDS9960 - Light/Color Sensor, Interrupt
 
   This example reads the light (C) and color (RGB) data from the on-board APDS9960 
-  sensor of the Nano 33 BLE Sense and prints the proximity value to the Serial Monitor 
-  then if the measure its outside the interrupt thresholds it will trigger an interrupt.
+  sensor of the Nano 33 BLE Sense and prints the proximity value to the Serial Monitor.
+  If the measure is outside the interrupt thresholds it will trigger an interrupt.
+
 
   The circuit:
   - Arduino Nano 33 BLE Sense

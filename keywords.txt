@@ -25,20 +25,20 @@ setGestureSensitivity	KEYWORD2
 setInterruptPin	KEYWORD2
 setLEDBoost	KEYWORD2
 
-setInterruptPin KEYWORD2
-enableProximityInterrupt    KEYWORD2
-disableProximityInterrupt   KEYWORD2
-proximityInterrupt  KEYWORD2
-clearProximityInterrupt KEYWORD2
-setProximityLowThreshold    KEYWORD2
-setProximityHighThreshold   KEYWORD2
+setInterruptPin	KEYWORD2
+enableProximityInterrupt	KEYWORD2
+disableProximityInterrupt	KEYWORD2
+proximityInterrupt	KEYWORD2
+clearProximityInterrupt	KEYWORD2
+setProximityLowThreshold	KEYWORD2
+setProximityHighThreshold	KEYWORD2
 
-enableLightInterrupt    KEYWORD2
-disableLightInterrupt   KEYWORD2
-lightInterrupt  KEYWORD2
-clearLightInterrupt KEYWORD2
-setLightLowThreshold    KEYWORD2
-setLightHighThreshold   KEYWORD2
+enableLightInterrupt	KEYWORD2
+disableLightInterrupt	KEYWORD2
+lightInterrupt	KEYWORD2
+clearLightInterrupt	KEYWORD2
+setLightLowThreshold	KEYWORD2
+setLightHighThreshold	KEYWORD2
 
 ###########################################
 # Constants
