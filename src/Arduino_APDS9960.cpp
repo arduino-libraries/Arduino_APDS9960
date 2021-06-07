@@ -510,8 +510,6 @@ void APDS9960::clearLightInterrupt(){
 }
 
 void APDS9960::setLightLowThreshold(uint16_t newThold){
-  Serial.print("set to ");
-  Serial.println(newThold);
   setAILTL(newThold);
   setAIHTL(newThold >> 8);
 }
@@ -522,8 +520,6 @@ void APDS9960::setLightHighThreshold(uint16_t newThold){
 
   uint8_t final;
   getENABLE(&final);
-  Serial.print("data: ");
-  Serial.println(final,BIN);
 }
 
 #if defined(APDS9960_INT_PIN)
