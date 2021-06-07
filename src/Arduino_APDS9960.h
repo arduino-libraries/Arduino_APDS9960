@@ -55,7 +55,7 @@ public:
 
   bool setLEDBoost(uint8_t boost);
 
-  //Interrupts
+  // Interrupts
   // Proximity interrupt
   void enableProximityInterrupt();
   void disableProximityInterrupt();

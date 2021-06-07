@@ -440,7 +440,6 @@ int APDS9960::readProximity() {
 
 
 // Interrupts related functions
-
 // Proximity Interrupt
 void APDS9960::enableProximityInterrupt(){
   uint8_t data;
@@ -515,22 +514,17 @@ void APDS9960::setLightLowThreshold(uint16_t newThold){
   Serial.println(newThold);
   setAILTL(newThold);
   setAIHTL(newThold >> 8);
-
-
 }
 
 void APDS9960::setLightHighThreshold(uint16_t newThold){
-
   setAILTL(newThold);
   setAIHTL(newThold >> 8);
-
 
   uint8_t final;
   getENABLE(&final);
   Serial.print("data: ");
   Serial.println(final,BIN);
 }
-
 
 #if defined(APDS9960_INT_PIN)
 APDS9960 APDS(APDS9960_WIRE_INSTANCE, APDS9960_INT_PIN);

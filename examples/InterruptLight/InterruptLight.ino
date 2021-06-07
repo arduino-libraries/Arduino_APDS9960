@@ -57,7 +57,7 @@ void loop() {
 
     interrupt_flag = 0;
     APDS.clearLightInterrupt();
-    Serial.println("Flag and interrupt clear");
+    Serial.println("Flag and interrupt cleared");
     delay(5000);
   }
 
