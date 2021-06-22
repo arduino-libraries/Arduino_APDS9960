@@ -632,39 +632,3 @@ APDS.setLEDBoost(3);
 * [readProximity()](#readProximity)
 * [setGestureSensitivity()](#setGestureSensitivity)
 * [setInterruptPin()](#setInterruptPin)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
