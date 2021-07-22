@@ -31,15 +31,15 @@ if (!APDS.begin()) {
 #### See also
 
 * [end()](#end)
-* [gestureAvailable()](#gestureAvailable)
-* [readGesture()](#readGesture)
-* [colorAvailable()](#colorAvailable)
-* [readColor()](#readColor)
-* [proximityAvailable()](#proximityAvailable)
-* [readProximity()](#readProximity)
-* [setGestureSensitivity()](#setGestureSensitivity)
-* [setInterruptPin()](#setInterruptPin)
-* [setLEDBoost()](#setLEDBoost)
+* [gestureAvailable()](#gestureavailable)
+* [readGesture()](#readgesture)
+* [colorAvailable()](#coloravailable)
+* [readColor()](#readcolor)
+* [proximityAvailable()](#proximityavailable)
+* [readProximity()](#readproximity)
+* [setGestureSensitivity()](#setgesturesensitivity)
+* [setInterruptPin()](#setinterruptpin)
+* [setLEDBoost()](#setledboost)
 
 ### `end()`
 
@@ -68,15 +68,15 @@ APDS.end();
 #### See also
 
 * [begin()](#begin)
-* [gestureAvailable()](#gestureAvailable)
-* [readGesture()](#readGesture)
-* [colorAvailable()](#colorAvailable)
-* [readColor()](#readColor)
-* [proximityAvailable()](#proximityAvailable)
-* [readProximity()](#readProximity)
-* [setGestureSensitivity()](#setGestureSensitivity)
-* [setInterruptPin()](#setInterruptPin)
-* [setLEDBoost()](#setLEDBoost)
+* [gestureAvailable()](#gestureavailable)
+* [readGesture()](#readgesture)
+* [colorAvailable()](#coloravailable)
+* [readColor()](#readcolor)
+* [proximityAvailable()](#proximityavailable)
+* [readProximity()](#readproximity)
+* [setGestureSensitivity()](#setgesturesensitivity)
+* [setInterruptPin()](#setinterruptpin)
+* [setLEDBoost()](#setledboost)
 
 ### `gestureAvailable()`
 
@@ -109,14 +109,14 @@ if (APDS.gestureAvailable()) {
 
 * [begin()](#begin)
 * [end()](#end)
-* [readGesture()](#readGesture)
-* [colorAvailable()](#colorAvailable)
-* [readColor()](#readColor)
-* [proximityAvailable()](#proximityAvailable)
-* [readProximity()](#readProximity)
-* [setGestureSensitivity()](#setGestureSensitivity)
-* [setInterruptPin()](#setInterruptPin)
-* [setLEDBoost()](#setLEDBoost)
+* [readGesture()](#readgesture)
+* [colorAvailable()](#coloravailable)
+* [readColor()](#readcolor)
+* [proximityAvailable()](#proximityavailable)
+* [readProximity()](#readproximity)
+* [setGestureSensitivity()](#setgesturesensitivity)
+* [setInterruptPin()](#setinterruptpin)
+* [setLEDBoost()](#setledboost)
 
 ### `readGesture()`
 
@@ -218,14 +218,14 @@ void loop() {
 
 * [begin()](#begin)
 * [end()](#end)
-* [gestureAvailable()](#readGesture)
-* [colorAvailable()](#colorAvailable)
-* [readColor()](#readColor)
-* [proximityAvailable()](#proximityAvailable)
-* [readProximity()](#readProximity)
-* [setGestureSensitivity()](#setGestureSensitivity)
-* [setInterruptPin()](#setInterruptPin)
-* [setLEDBoost()](#setLEDBoost)
+* [gestureAvailable()](#readgesture)
+* [colorAvailable()](#coloravailable)
+* [readColor()](#readcolor)
+* [proximityAvailable()](#proximityavailable)
+* [readProximity()](#readproximity)
+* [setGestureSensitivity()](#setgesturesensitivity)
+* [setInterruptPin()](#setinterruptpin)
+* [setLEDBoost()](#setledboost)
 
 ### `colorAvailable()`
 
@@ -261,14 +261,14 @@ if (APDS.colorAvailable()) {
 
 * [begin()](#begin)
 * [end()](#end)
-* [gestureAvailable()](#readGesture)
-* [readGesture()](#colorAvailable)
-* [readColor()](#readColor)
-* [proximityAvailable()](#proximityAvailable)
-* [readProximity()](#readProximity)
-* [setGestureSensitivity()](#setGestureSensitivity)
-* [setInterruptPin()](#setInterruptPin)
-* [setLEDBoost()](#setLEDBoost)
+* [gestureAvailable()](#readgesture)
+* [readGesture()](#coloravailable)
+* [readColor()](#readcolor)
+* [proximityAvailable()](#proximityavailable)
+* [readProximity()](#readproximity)
+* [setGestureSensitivity()](#setgesturesensitivity)
+* [setInterruptPin()](#setinterruptpin)
+* [setLEDBoost()](#setledboost)
 
 ### `readColor()`
 
@@ -352,14 +352,14 @@ void loop() {
 
 * [begin()](#begin)
 * [end()](#end)
-* [gestureAvailable()](#readGesture)
-* [readGesture()](#colorAvailable)
-* [colorAvailable()](#readColor)
-* [proximityAvailable()](#proximityAvailable)
-* [readProximity()](#readProximity)
-* [setGestureSensitivity()](#setGestureSensitivity)
-* [setInterruptPin()](#setInterruptPin)
-* [setLEDBoost()](#setLEDBoost)
+* [gestureAvailable()](#readgesture)
+* [readGesture()](#coloravailable)
+* [colorAvailable()](#readcolor)
+* [proximityAvailable()](#proximityavailable)
+* [readProximity()](#readproximity)
+* [setGestureSensitivity()](#setgesturesensitivity)
+* [setInterruptPin()](#setinterruptpin)
+* [setLEDBoost()](#setledboost)
 
 ### `colorAvailable()`
 
@@ -395,14 +395,14 @@ if (APDS.colorAvailable()) {
 
 * [begin()](#begin)
 * [end()](#end)
-* [gestureAvailable()](#readGesture)
-* [readGesture()](#colorAvailable)
-* [readColor()](#readColor)
-* [proximityAvailable()](#proximityAvailable)
-* [readProximity()](#readProximity)
-* [setGestureSensitivity()](#setGestureSensitivity)
-* [setInterruptPin()](#setInterruptPin)
-* [setLEDBoost()](#setLEDBoost)
+* [gestureAvailable()](#readgesture)
+* [readGesture()](#coloravailable)
+* [readColor()](#readcolor)
+* [proximityAvailable()](#proximityavailable)
+* [readProximity()](#readproximity)
+* [setGestureSensitivity()](#setgesturesensitivity)
+* [setInterruptPin()](#setinterruptpin)
+* [setLEDBoost()](#setledboost)
 
 ### `proximityAvailable()`
 
@@ -436,14 +436,14 @@ if (APDS.proximityAvailable()) {
 
 * [begin()](#begin)
 * [end()](#end)
-* [gestureAvailable()](#readGesture)
-* [readGesture()](#colorAvailable)
-* [readColor()](#readColor)
-* [colorAvailable()](#proximityAvailable)
-* [readProximity()](#readProximity)
-* [setGestureSensitivity()](#setGestureSensitivity)
-* [setInterruptPin()](#setInterruptPin)
-* [setLEDBoost()](#setLEDBoost)
+* [gestureAvailable()](#readgesture)
+* [readGesture()](#coloravailable)
+* [readColor()](#readcolor)
+* [colorAvailable()](#proximityavailable)
+* [readProximity()](#readproximity)
+* [setGestureSensitivity()](#setgesturesensitivity)
+* [setInterruptPin()](#setinterruptpin)
+* [setLEDBoost()](#setledboost)
 
 ### `readProximity()`
 
@@ -512,14 +512,14 @@ void loop() {
 
 * [begin()](#begin)
 * [end()](#end)
-* [gestureAvailable()](#readGesture)
-* [readGesture()](#colorAvailable)
-* [readColor()](#readColor)
-* [colorAvailable()](#proximityAvailable)
-* [proximityAvailable](#readProximity)
-* [setGestureSensitivity()](#setGestureSensitivity)
-* [setInterruptPin()](#setInterruptPin)
-* [setLEDBoost()](#setLEDBoost)
+* [gestureAvailable()](#readgesture)
+* [readGesture()](#coloravailable)
+* [readColor()](#readcolor)
+* [colorAvailable()](#proximityavailable)
+* [proximityAvailable](#readproximity)
+* [setGestureSensitivity()](#setgesturesensitivity)
+* [setInterruptPin()](#setinterruptpin)
+* [setLEDBoost()](#setledboost)
 
 ### `setGestureSensitivity()`
 
@@ -549,14 +549,14 @@ APDS.setGestureSensitivity(90);
 
 * [begin()](#begin)
 * [end()](#end)
-* [gestureAvailable()](#readGesture)
-* [readGesture()](#colorAvailable)
-* [readColor()](#readColor)
-* [colorAvailable()](#proximityAvailable)
-* [proximityAvailable](#readProximity)
-* [readProximity()](#setGestureSensitivity)
-* [setInterruptPin()](#setInterruptPin)
-* [setLEDBoost()](#setLEDBoost)
+* [gestureAvailable()](#readgesture)
+* [readGesture()](#coloravailable)
+* [readColor()](#readcolor)
+* [colorAvailable()](#proximityavailable)
+* [proximityAvailable](#readproximity)
+* [readProximity()](#setgesturesensitivity)
+* [setInterruptPin()](#setinterruptpin)
+* [setLEDBoost()](#setledboost)
 
 ### `setInterruptPin()`
 
@@ -586,14 +586,14 @@ APDS.setInterruptPin(x);
 
 * [begin()](#begin)
 * [end()](#end)
-* [gestureAvailable()](#readGesture)
-* [readGesture()](#colorAvailable)
-* [readColor()](#readColor)
-* [colorAvailable()](#proximityAvailable)
-* [proximityAvailable](#readProximity)
-* [readProximity()](#setGestureSensitivity)
-* [setGestureSensitivity()](#setInterruptPin)
-* [setLEDBoost()](#setLEDBoost)
+* [gestureAvailable()](#readgesture)
+* [readGesture()](#coloravailable)
+* [readColor()](#readcolor)
+* [colorAvailable()](#proximityavailable)
+* [proximityAvailable](#readproximity)
+* [readProximity()](#setgesturesensitivity)
+* [setGestureSensitivity()](#setinterruptpin)
+* [setLEDBoost()](#setledboost)
 
 ### `setLEDBoost()`
 
@@ -624,11 +624,11 @@ APDS.setLEDBoost(3);
 
 * [begin()](#begin)
 * [end()](#end)
-* [gestureAvailable()](#gestureAvailable)
-* [readGesture()](#readGesture)
-* [colorAvailable()](#colorAvailable)
-* [readColor()](#readColor)
-* [proximityAvailable()](#proximityAvailable)
-* [readProximity()](#readProximity)
-* [setGestureSensitivity()](#setGestureSensitivity)
-* [setInterruptPin()](#setInterruptPin)
+* [gestureAvailable()](#gestureavailable)
+* [readGesture()](#readgesture)
+* [colorAvailable()](#coloravailable)
+* [readColor()](#readcolor)
+* [proximityAvailable()](#proximityavailable)
+* [readProximity()](#readproximity)
+* [setGestureSensitivity()](#setgesturesensitivity)
+* [setInterruptPin()](#setinterruptpin)
