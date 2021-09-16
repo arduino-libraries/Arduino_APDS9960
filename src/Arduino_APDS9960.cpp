@@ -52,7 +52,7 @@ bool APDS9960::begin() {
   if (!setWTIME(0xFF)) return false;
   if (!setGPULSE(0x8F)) return false; // 16us, 16 pulses // default is: 0x40 = 8us, 1 pulse
   if (!setPPULSE(0x8F)) return false; // 16us, 16 pulses // default is: 0x40 = 8us, 1 pulse
-  if (!setGestureIntEnable(true)) return false;
+  //if (!setGestureIntEnable(true)) return false;
   if (!setGestureMode(true)) return false;
   if (!enablePower()) return false;
   if (!enableWait()) return false;
@@ -64,6 +64,11 @@ bool APDS9960::begin() {
   // enable power
   if (!enablePower()) return false;
 
+  //Clear remaining interrupts
+  if(!setPERS(0b00010001)) return false;
+  /*clearLightInterrupt();
+  clearProximityInterrupt();*/
+  
   if (_intPin > -1) {
     pinMode(_intPin, INPUT);
   }
@@ -428,9 +433,93 @@ int APDS9960::readProximity() {
     return -1;
   }
 
-  disableProximity();
+  //disableProximity();
 
   return (255 - r);
+}
+
+
+// Interrupts related functions
+// Proximity Interrupt
+void APDS9960::enableProximityInterrupt(){
+  uint8_t data;
+  getENABLE(&data);
+  data &= 0b01111111; //MSB reserved
+  data |= 0b1;        //PowerON
+  data |= 0b00100000; //Int prox
+  setENABLE(data);
+}
+
+void APDS9960::disableProximityInterrupt(){
+  uint8_t data;
+  getENABLE(&data);
+  data &= 0b01111111; //MSB reserved
+  data |= 0b1;        //PowerON
+  data &= 0b01011111; //Int prox disable
+  setENABLE(data);
+}
+
+bool APDS9960::proximityInterrupt(){
+  uint8_t data;
+  getENABLE(&data);
+  data &= 0b100000;
+  return bool(data >> 5);
+}
+
+void APDS9960::clearProximityInterrupt(){
+  setPICLEAR(0b1);
+}
+
+void APDS9960::setProximityLowThreshold(uint8_t newThold){
+  setPILT(newThold);
+}
+
+void APDS9960::setProximityHighThreshold(uint8_t newThold){
+  setPIHT(newThold);
+}
+
+// Light interrupt (Clear channel from RGBC)
+void APDS9960::enableLightInterrupt(){
+  uint8_t data;
+  getENABLE(&data);
+  data &= 0b01111111; //MSB reserved
+  data |= 0b1;        //PowerON
+  data |= 0b00010000; //ALS
+  setENABLE(data);
+}
+
+void APDS9960::disableLightInterrupt(){
+  uint8_t data;
+  getENABLE(&data);
+  data &= 0b01111111; //MSB reserved
+  data |= 0b1;        //PowerON
+  data &= 0b01101111; //ALS disable
+  setENABLE(data);
+}
+
+bool APDS9960::lightInterrupt(){
+  uint8_t data;
+  getSTATUS(&data);
+  data &= 0b010000;
+  return bool(data >> 4);
+}
+
+void APDS9960::clearLightInterrupt(){
+  //Only non gesture ones
+  setAICLEAR(0b1);
+}
+
+void APDS9960::setLightLowThreshold(uint16_t newThold){
+  setAILTL(newThold);
+  setAIHTL(newThold >> 8);
+}
+
+void APDS9960::setLightHighThreshold(uint16_t newThold){
+  setAILTL(newThold);
+  setAIHTL(newThold >> 8);
+
+  uint8_t final;
+  getENABLE(&final);
 }
 
 #if defined(APDS9960_INT_PIN)
