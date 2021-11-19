@@ -258,7 +258,7 @@ bool APDS9960::read(uint8_t reg, uint8_t *val) {
 size_t APDS9960::readBlock(uint8_t reg, uint8_t *val, unsigned int len) {
     size_t i = 0;
     if (!write(reg)) return 0;
-    _wire.requestFrom(APDS9960_ADDR, len);
+    _wire.requestFrom((uint8_t)APDS9960_ADDR, len);
     while (_wire.available()) {
       if (i == len) return 0;
       val[i++] = _wire.read();
